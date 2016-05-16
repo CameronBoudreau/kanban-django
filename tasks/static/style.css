@@ -1,0 +1,30 @@
+body {
+    background-color: #2eb9bd;
+}
+
+.container {
+    width: 1500px;
+}
+
+.form {
+    display: inline-block;
+    width: 350px;
+}
+
+.list {
+    display: inline-block;
+    top: 10px;
+    width: 350px;
+    background-color: #e7eaea;
+}
+
+li {
+    padding: 5px;
+    background-color: white;
+    list-style-type:none
+}
+
+#card {
+    background-color: #e7eaea;
+
+}

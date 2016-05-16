@@ -1,0 +1,58 @@
+{% load rest_framework %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tasks</title>
+        <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+    </head>
+    <body>
+            <div class="list">
+            <h2>Urgent</h2>
+            <ul id="urgent">
+            </ul>
+            </div>
+
+            <div class="list">
+            <h2>In Progress</h2>
+            <ul id='inProgress'>
+            </ul>
+            </div>
+
+            <div class="list">
+            <h2>Complete</h2>
+            <ul id='complete'>
+            </ul>
+            </div>
+
+        <div class="form">
+        <form id="card" action="" method="post">
+        {% csrf_token %}
+          <legend><h3><u>Create New Card</u></h3></legend>
+          <label for=""><u>Title</u></label>
+          <br>
+          <input type="text" name="title" value="" required="True">
+          <br />
+          <label for=""><u>Description</u></label>
+          <br>
+          <textarea form='card' name="description" cols="50" rows="5"></textarea>
+          <br />
+          <label for=""><u>Status</u></label>
+          <br>
+          <select name="status" form="card" required="">
+              <option value=""></option>
+              <option value="Urgent">Urgent</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Complete">Complete</option>
+          </select>
+          <br><br>
+          <input type="submit" value="Create">
+        </form>
+        </div>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="{% static "main.js" %}"></script>
+    </body>
+</html>

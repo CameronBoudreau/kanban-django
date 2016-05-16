@@ -1,28 +1,23 @@
 from rest_framework import serializers
 from .models import Card
+from django.contrib.auth.models import User
 
-STATUS_CHOICES = ['Urgent', 'On Deck', 'In Progress', 'Complete']
+STATUS_CHOICES = ['Urgent', 'In Progress', 'Complete']
 
 
-class CardSerializer(serializers.Serializer):
+class CardSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    status = serializers.ChoiceField(choices=STATUS_CHOICES)
 
-    pk = serializers.IntegerField(read_only=True)
-    title = serializers.CharField(required=True, allow_blank=False, max_length=20)
-    description = serializers.CharField(required=True, allow_blank=True, style={'base_template': 'textarea.html'})
-    status = serializers.ChoiceField(choices=STATUS_CHOICES, default='On Deck')
-    created = serializers.DateField()
+    class Meta:
+        model = Card
+        fields = ('id', 'owner', 'title', 'description', 'status', 'created')
 
-    def create(self, validated_data):
-        return Card.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get('title', instance.title)
+class UserSerializer(serializers.ModelSerializer):
+    cards = serializers.PrimaryKeyRelatedField(many=True,
+                                               queryset=Card.objects.all())
 
-        instance.description = validated_data.get('description', instance.description)
-
-        instance.status = validated_data.get('status', instance.status)
-
-        instance.created = validated_data.get('created', instance.created)
-
-        instance.save()
-        return instance
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'cards')
