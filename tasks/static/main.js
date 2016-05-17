@@ -26,17 +26,22 @@
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
-        }sdfasf
+        }
     });
 
 
     var add_to_list = function(card) {
         console.log(card.status + card.title + ": " + card.description)
         var $li = $('<li>');
+
         var $del = $('<button id=' + card.id + '>Delete</button>');
+
+
         $li.text(card.title + ": " + card.description);
         if (card.status == 'Urgent') {
             $li.appendTo($('#urgent'));
+
+            
             $del.appendTo($('#urgent')).click( function() {
 		        var sibling = $(this).prev();
 
